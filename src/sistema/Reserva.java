@@ -3,6 +3,7 @@ package sistema;
 import org.joda.time.DateTime;
 
 import hotel.Habitacion;
+import hotel.Hotel;
 import usuario.Usuario;
 
 public class Reserva {
@@ -13,7 +14,7 @@ public class Reserva {
 	private Integer cantidadPasajeros;
 	private Usuario usuario;
 	private Habitacion habitacion;
-	//private Habitacion habitacion;
+	private Hotel hotel;
 
 	public Reserva( DateTime checkIn, DateTime checkOut, Integer cantPasajeros, Usuario usuario ){
 		this.setFechaEntrada(checkIn);
@@ -23,6 +24,9 @@ public class Reserva {
 		
 	}
 	
+	public String ciudadDeReserva(){
+		return this.hotel.getCiudad();
+	}
 	
 
 	public Habitacion getHabitacion() {
@@ -79,6 +83,18 @@ public class Reserva {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+
+
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 
 }

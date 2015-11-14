@@ -14,6 +14,11 @@ public class Pasajero extends Usuario{
 	}
 
 	public Collection<Reserva> getReservas( Collection<Reserva> reservas ){
+		Collection<Reserva> resultReserva = new ArrayList<Reserva>();
+		return resultReserva;
+		}
+	
+	public Collection<Reserva> reservasFuturas( Collection<Reserva> reservas){
 		
 		Collection<Reserva> resultReserva = new ArrayList<Reserva>();
 		
@@ -25,20 +30,19 @@ public class Pasajero extends Usuario{
 		return resultReserva; 
 	}
 
-	//como las reservas solo tienen la habitacion y la habitacion no conoce su hotel tengo 
-	//que pedir los hoteles para linkear con las habitaciones y asi poder obtener las ciudades
-	public Collection<String> ciudadesConReservas( Collection<Reserva> reservas, Collection<Hotel> hoteles ){
+	//aca recorro las reservas y guardo en un set para que no se repitan
+	public Collection<String> ciudadesConReservas( Collection<Reserva> reservas ){
 		
 		Collection<String> returnCiudades = new HashSet<String>();
 		
 		for ( Reserva r : reservas ){
-			for ( Hotel h : hoteles ){
-				if ( h.getHabitaciones().contains( r )  ){
-					returnCiudades.add( h.getCiudad() );
-				};
+				returnCiudades.add( r.ciudadDeReserva() );
 			}
-		}
 		
 		return returnCiudades;
+	}
+	
+	public String ciudadDeReserva( Reserva reserva ){
+		return reserva.ciudadDeReserva();
 	}
 }
