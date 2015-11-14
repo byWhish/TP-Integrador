@@ -9,6 +9,12 @@ public class Buscador {
 	private Integer cantidadPasajeros;
 	private String ciudad;
 	
-	
+	public Buscador( DateTime checkIn, DateTime checkOut,Integer cantPasajeros,String  city ){
+		
+		this.fechaIngreso = checkIn;
+		this.fechaSalida = checkOut;
+		this.cantidadPasajeros = cantPasajeros;
+		this.ciudad = city;
+	}
 
 }

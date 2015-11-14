@@ -23,4 +23,14 @@ public class Pasajero extends Usuario{
 		return resultReserva; 
 	}
 
+	public Collection<String> ciudadesConReservas( Collection<Reserva> reservas ){
+		
+		Collection<String> returnCiudades = new ArrayList<String>();
+		
+		for ( Reserva r : reservas){
+			
+		}
+		
+		return returnCiudades;
+	}
 }
