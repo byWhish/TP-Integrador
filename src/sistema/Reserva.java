@@ -9,6 +9,7 @@ import usuario.Usuario;
 public class Reserva {
 
 	//una reseva tiene una fecha de checkIn, checkOut, una cantidad de pasajeros un usuario y una habitacion
+	//despues le agregue tambien el hotel para fasilitar las busquedas de ciudad
 	private DateTime fechaEntrada;
 	private DateTime fechaSalida;
 	private Integer cantidadPasajeros;

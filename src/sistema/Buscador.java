@@ -1,6 +1,12 @@
 package sistema;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.joda.time.DateTime;
+
+import hotel.Habitacion;
+import hotel.Hotel;
 
 public class Buscador {
 	
@@ -15,6 +21,37 @@ public class Buscador {
 		this.fechaSalida = checkOut;
 		this.cantidadPasajeros = cantPasajeros;
 		this.ciudad = city;
+	}
+	//tiene que cumplir disponibilidad y capacidad
+	public boolean habitacionCumple( Habitacion habitacion ){
+		return true;
+	}
+	
+	//tiene que cumplir disponibilidad, capacidad y ciudad
+	public boolean hotelCumple( Hotel hotel){
+		return true;
+	}
+	
+	public Collection<Habitacion> buscarHabitaciones( Hotel hotel ){
+		Collection<Habitacion> resultHabitaciones = new ArrayList<Habitacion>();
+		for ( Habitacion h : hotel.getHabitaciones() ){
+			if ( habitacionCumple( h ) ){
+				resultHabitaciones.add( h );
+			}
+		}
+			
+		return resultHabitaciones;
+		
+	}
+	
+	public Collection<Hotel> buscarHoteles( Collection<Hotel>hoteles ){
+		Collection<Hotel> resultHoteles = new ArrayList<Hotel>();
+		for ( Hotel h : hoteles ){
+			if ( hotelCumple( h ) ){
+				resultHoteles.add( h );
+			}
+		}
+		return resultHoteles;
 	}
 
 }
