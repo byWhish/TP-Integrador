@@ -22,6 +22,23 @@ public class Buscador {
 		this.cantidadPasajeros = cantPasajeros;
 		this.ciudad = city;
 	}
+	
+	public DateTime getFechaIngreso(){
+		return this.fechaIngreso;
+	}
+	
+	public DateTime getFechaSalida(){
+		return this.fechaSalida;
+	}
+	
+	public Integer getCantidadPasajeros(){
+		return this.cantidadPasajeros;
+	}
+	
+	public String getCiudad(){
+		return this.ciudad;
+	}
+	
 	//tiene que cumplir disponibilidad y capacidad
 	public boolean habitacionCumple( Habitacion habitacion ){
 		return true;

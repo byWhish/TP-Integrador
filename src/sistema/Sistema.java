@@ -26,6 +26,10 @@ public class Sistema {
 		reservas.add( reserva );
 	}
 	
+	public void cancelarReserva( Reserva reserva ){
+		reservas.remove( reserva );
+	}
+	
 	public Usuario logIn( String eMail, String pass ){
 		
 		Usuario resultUsuario = null;
@@ -38,9 +42,9 @@ public class Sistema {
 		return resultUsuario;
 	}
 	
-	public void reservasHabitacion( Habitacion habitacion, Usuario pasajero ){
+	public void reservarHabitacion( Habitacion habitacion, Usuario pasajero, Buscador busqueda ){
 		
-		Reserva newReserva = new Reserva( new DateTime(), new DateTime(), 2, pasajero );
+		Reserva newReserva = new Reserva( busqueda.getFechaIngreso(), busqueda.getFechaSalida(), busqueda.getCantidadPasajeros(), pasajero, habitacion );
 		
 		reservas.add( newReserva );
 	}

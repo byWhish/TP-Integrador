@@ -2,6 +2,8 @@ package test;
 
 import org.joda.time.DateTime;
 
+import hotel.Habitacion;
+import hotel.Hotel;
 import junit.framework.TestCase;
 import sistema.Reserva;
 import sistema.Sistema;
@@ -13,12 +15,16 @@ public class TestSistema extends TestCase{
 	Sistema miSistema;
 	Usuario miUsuario;
 	Reserva miReserva;
+	Habitacion miHabitacion;
+	Hotel miHotel;
 	
 	public void setUp(){
 		
 		miSistema = new Sistema();
 		miUsuario = new Pasajero( "tito@gmail.com","1234" );
-		miReserva = new Reserva(new DateTime(2015,12,1,0,0), new DateTime(2015,12,1,0,0), 2, new Pasajero( "tito@gmail.com", "1234"));
+		miHotel = new Hotel();
+		miHabitacion = new Habitacion(10, miHotel, 2, 1);
+		miReserva = new Reserva(new DateTime(2015,12,1,0,0), new DateTime(2015,12,1,0,0), 2, new Pasajero( "tito@gmail.com", "1234"), miHabitacion);
 		
 		miSistema.agregarUsuario( miUsuario );
 			

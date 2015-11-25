@@ -17,11 +17,12 @@ public class Reserva {
 	private Habitacion habitacion;
 	private Hotel hotel;
 
-	public Reserva( DateTime checkIn, DateTime checkOut, Integer cantPasajeros, Usuario usuario ){
-		this.setFechaEntrada(checkIn);
-		this.setFechaSalida(checkOut);
-		this.setCantidadPasajeros(cantPasajeros);
-		this.setUsuario(usuario);
+	public Reserva( DateTime checkIn, DateTime checkOut, Integer cantPasajeros, Usuario usuario, Habitacion habitacion ){
+		this.fechaEntrada = checkIn;
+		this.fechaSalida = checkOut;
+		this.cantidadPasajeros = cantPasajeros;
+		this.usuario = usuario;
+		this.habitacion = habitacion;
 		
 	}
 	
