@@ -1,59 +1,35 @@
-package sistema;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import org.joda.time.DateTime;
 
 import hotel.Habitacion;
 import hotel.Hotel;
 
+
 public class Buscador {
+	String ciudad;
+	int nroPasajeros;
+	DateTime fechaEntrada;
+	DateTime fechaSalida;
 	
-	private DateTime fechaIngreso;
-	private DateTime fechaSalida;
-	private Integer cantidadPasajeros;
-	private String ciudad;
-	
-	public Buscador( DateTime checkIn, DateTime checkOut,Integer cantPasajeros,String  city ){
+public Buscador( DateTime checkIn, DateTime checkOut,Integer cantPasajeros,String  city ){
 		
-		this.fechaIngreso = checkIn;
+		this.fechaEntrada = checkIn;
 		this.fechaSalida = checkOut;
-		this.cantidadPasajeros = cantPasajeros;
+		this.nroPasajeros = cantPasajeros;
 		this.ciudad = city;
 	}
-	
-	public DateTime getFechaIngreso(){
-		return this.fechaIngreso;
-	}
-	
-	public DateTime getFechaSalida(){
-		return this.fechaSalida;
-	}
-	
-	public Integer getCantidadPasajeros(){
-		return this.cantidadPasajeros;
-	}
-	
-	public String getCiudad(){
-		return this.ciudad;
-	}
-	
-	//tiene que cumplir disponibilidad y capacidad
-	public boolean habitacionCumple( Habitacion habitacion ){
-		return true;
-	}
-	
-	//tiene que cumplir disponibilidad, capacidad y ciudad
-	public boolean hotelCumple( Hotel hotel){
-		return true;
-	}
-	
+		
 	public Collection<Habitacion> buscarHabitaciones( Hotel hotel ){
 		Collection<Habitacion> resultHabitaciones = new ArrayList<Habitacion>();
-		for ( Habitacion h : hotel.getHabitaciones() ){
-			if ( habitacionCumple( h ) ){
-				resultHabitaciones.add( h );
+		//for ( Habitacion h : hotel.getHabitaciones() ){
+		for(int i=0; i< hotel.getHabitaciones().size(); i++){
+			
+			if ( habitacionCumple( hotel.getHabitaciones().get(i))){
+				resultHabitaciones.add(  hotel.getHabitaciones().get(i) );
 			}
 		}
 			
@@ -70,5 +46,35 @@ public class Buscador {
 		}
 		return resultHoteles;
 	}
+	
+	//tiene que cumplir disponibilidad y capacidad
+		public boolean habitacionCumple( Habitacion habitacion ){
+			return (habitacion.disponibilidad(fechaEntrada,fechaSalida)&& habitacion.getCapMaxima()>= nroPasajeros);
+		}
+		
+		//tiene que cumplir disponibilidad, capacidad y ciudad
+		public boolean hotelCumple( Hotel hotel){
+			if(hotel.getCiudad() == ciudad ){
+				// pregunta a cada habitacion del hotel si cumple la condicion o no 
+				for(Habitacion h : hotel.getHabitaciones()){
+					if(habitacionCumple(h)){
+						return true; 
+					}
+			}
+		}
+			return false; 
+	}
 
+		public DateTime getFechaIngreso() {
+			return this.fechaEntrada;
+		}
+
+		public DateTime getFechaSalida() {
+			return this.fechaSalida;
+		}
+
+		public Integer getCantidadPasajeros() {
+			return this.nroPasajeros;
+		}
+		
 }

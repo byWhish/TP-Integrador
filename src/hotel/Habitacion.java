@@ -120,6 +120,16 @@ public class Habitacion {
 			return this.precioBasePorNoche;
 		}
 		
+		/** Con esto devuelvo la ciudad de la habitacion*/
+		public String getCiudad(){
+			return this.getHotel().getCiudad();
+		}
+
+
+		public int getCapMaxima() {
+			return this.capacidadMaxima;
+		};
+		
 		
 //finSetters&Getters--------------------------------------------------------------------------
 }

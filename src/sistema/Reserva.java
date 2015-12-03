@@ -9,13 +9,11 @@ import usuario.Usuario;
 public class Reserva {
 
 	//una reseva tiene una fecha de checkIn, checkOut, una cantidad de pasajeros un usuario y una habitacion
-	//despues le agregue tambien el hotel para fasilitar las busquedas de ciudad
 	private DateTime fechaEntrada;
 	private DateTime fechaSalida;
 	private Integer cantidadPasajeros;
 	private Usuario usuario;
 	private Habitacion habitacion;
-	private Hotel hotel;
 
 	public Reserva( DateTime checkIn, DateTime checkOut, Integer cantPasajeros, Usuario usuario, Habitacion habitacion ){
 		this.fechaEntrada = checkIn;
@@ -26,8 +24,9 @@ public class Reserva {
 		
 	}
 	
+	//devuelvo la ciudad de la reserva
 	public String ciudadDeReserva(){
-		return this.hotel.getCiudad();
+		return this.habitacion.getCiudad();
 	}
 	
 
@@ -46,57 +45,13 @@ public class Reserva {
 	}
 
 
-
-	public void setFechaEntrada(DateTime fechaEntrada) {
-		this.fechaEntrada = fechaEntrada;
-	}
-
-
-
-	public DateTime getFechaSalida() {
-		return fechaSalida;
-	}
-
-
-
-	public void setFechaSalida(DateTime fechaSalida) {
-		this.fechaSalida = fechaSalida;
-	}
-
-
-
 	public Integer getCantidadPasajeros() {
 		return cantidadPasajeros;
 	}
 
 
-
-	public void setCantidadPasajeros(Integer cantidadPasajeros) {
-		this.cantidadPasajeros = cantidadPasajeros;
-	}
-
-
-
 	public Usuario getUsuario() {
 		return usuario;
-	}
-
-
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-
-
-	public Hotel getHotel() {
-		return hotel;
-	}
-
-
-
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
 	}
 
 }
