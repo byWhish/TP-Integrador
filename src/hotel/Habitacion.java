@@ -128,6 +128,12 @@ public class Habitacion {
 
 		public int getCapMaxima() {
 			return this.capacidadMaxima;
+		}
+
+
+		public void sethotel(Hotel hotel2) {
+			this.hotel = hotel;
+			
 		};
 		
 		

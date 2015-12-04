@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.joda.time.DateTime;
 
 import hotel.Habitacion;
+import hotel.Hotel;
 import usuario.Usuario;
 
 public class Sistema {
@@ -30,10 +31,18 @@ public class Sistema {
 		reservas.add( reserva );
 	}
 	
+	//cancelo una reserva del sistema
 	public void cancelarReserva( Reserva reserva ){
 		reservas.remove( reserva );
 	}
 	
+	//devuelvo una reserva con la habitacion modificada
+	public Reserva modificarReserva ( Reserva reserva, Habitacion habitacion ){
+		reserva.setHabitacion( habitacion );
+		return reserva;
+	}
+	
+	//devuelvo un usuario que responda a un correo y un pass
 	public Usuario logIn( String eMail, String pass ){
 		
 		Usuario resultUsuario = null;
@@ -58,5 +67,9 @@ public class Sistema {
 	}
 
 }
+	//devuelvo todas las reservas del sistema
+	public Collection<Reserva> getReservas(){
+		return this.reservas;
+	}
 	
 }

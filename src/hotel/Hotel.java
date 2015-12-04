@@ -22,8 +22,6 @@ public class Hotel {
 	private Collection<Servicio> servicios;
 	private Collection<String> formasDePago;
 	
-	
-	
 	public Hotel(){
 		
 	}

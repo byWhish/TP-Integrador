@@ -62,4 +62,9 @@ public class Reserva {
 		return this.getHotel().getCiudad();
 	}
 
+	public void setHotel(Hotel hotel) {
+		this.habitacion.sethotel( hotel );
+		
+	}
+
 }

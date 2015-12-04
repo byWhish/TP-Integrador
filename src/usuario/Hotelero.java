@@ -20,12 +20,31 @@ public class Hotelero extends Usuario{
 		
 	}
 	
+	//devuelvo las reservas a partir de N dias
 	public Collection<Reserva> reservasAPartirDeNDias( int cantidadDias, Collection<Reserva> reservas ){
 		
 		DateTime toDay = new DateTime();
 		
 		return reservasAPartirDeFecha( toDay.plusDays( cantidadDias ), reservas );
 		
+	}
+	
+	
+	//devuelvo las reservas actuales aquellas donde los pasajeros estan en el hotel actualmente
+	public Collection<Reserva> reservasActuales( Collection<Reserva> reservas ){
+		
+		Collection<Reserva> resultReservas = new ArrayList<Reserva>();
+		
+		reservas = this.getReservas( reservas );
+		
+		for ( Reserva r : reservas ){
+			if ( r.getFechaEntrada().isBeforeNow()){
+				resultReservas.add( r );
+			}
+		}
+		
+		return resultReservas;
+				
 	}
 	
 	
