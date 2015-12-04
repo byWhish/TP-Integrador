@@ -3,6 +3,8 @@ package usuario;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.joda.time.DateTime;
+
 import sistema.Reserva;
 
 public abstract class Usuario {
@@ -37,5 +39,26 @@ public abstract class Usuario {
 	
 	//reserva del usuario es la condicion para saber si la reserva le pertenece al usuario
 	public abstract boolean reservaDelUsuario( Reserva reserva );
+	
+	//devuelvo una coleccion con las reservas futuras a la fecha actual
+		public Collection<Reserva> reservasFuturas( Collection<Reserva> reservas){
+			
+			DateTime toDay = new DateTime();
+			
+			return this.reservasAPartirDeFecha( toDay, reservas); 
+		}
+		
+		//devuelvo una coleccion con las reservas a partir de una fecha dada
+		public Collection<Reserva> reservasAPartirDeFecha( DateTime fecha, Collection<Reserva> reservas ){
+			Collection<Reserva> resultReservas = new ArrayList<Reserva>();
+			reservas = getReservas( reservas );
+			
+			for ( Reserva r : reservas ){
+				if ( r.getFechaEntrada().isAfter( fecha ) ){
+					resultReservas.add( r );
+				}
+			}
+			return resultReservas;
+		}
 
 }

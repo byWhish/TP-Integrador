@@ -57,5 +57,9 @@ public class Reserva {
 	public Hotel getHotel() {
 		return this.habitacion.getHotel();
 	}
+	
+	public String getCiudad(){
+		return this.getHotel().getCiudad();
+	}
 
 }

@@ -3,6 +3,8 @@ package usuario;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.joda.time.DateTime;
+
 import hotel.Habitacion;
 import hotel.Hotel;
 import sistema.Reserva;
@@ -18,22 +20,19 @@ public class Hotelero extends Usuario{
 		
 	}
 	
-	public Collection<Reserva> reservasFuturas(Collection<Reserva> reservas) {
+	public Collection<Reserva> reservasAPartirDeNDias( int cantidadDias, Collection<Reserva> reservas ){
 		
-		reservas = getReservas( reservas );
+		DateTime toDay = new DateTime();
 		
-		Collection<Reserva> resultReservas = new ArrayList<Reserva>(); 
+		return reservasAPartirDeFecha( toDay.plusDays( cantidadDias ), reservas );
 		
-		for( Reserva r : reservas){
-			//esto me dice que reservas tienen habitaciones del hotelero
-			if( this.hotel.getHabitaciones().contains( r.getHabitacion() ) )
-			resultReservas.add( r );
-		}
-		
-		return resultReservas;
 	}
+	
+	
 
 	@Override
+	//condicion particular para obtener las reservas de un hotelero
+	//como la reserva conoce al hotel lo comparo con el hotel que conoce el hotelero
 	public boolean reservaDelUsuario(Reserva reserva) { 
 		return reserva.getHotel() == this.hotel;
 	}

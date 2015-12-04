@@ -13,22 +13,13 @@ public class Pasajero extends Usuario{
 		super(eMail, pass);
 	}
 
+	//esta es la condicion particular para obtener las reservas de un pasajero
 	public boolean reservaDelUsuario( Reserva reserva ){
 		
 			return ( reserva.getUsuario() == this );
 		}
 	
-	public Collection<Reserva> reservasFuturas( Collection<Reserva> reservas){
-		
-		Collection<Reserva> resultReserva = new ArrayList<Reserva>();
-		
-		for( Reserva r : reservas){
-			if ( r.getFechaEntrada().isAfterNow() ){
-				resultReserva.add(r);
-			}
-		}
-		return resultReserva; 
-	}
+	
 
 	//aca recorro las reservas y guardo en un set para que no se repitan
 	public Collection<String> ciudadesConReservas( Collection<Reserva> reservas ){
@@ -42,8 +33,15 @@ public class Pasajero extends Usuario{
 		return returnCiudades;
 	}
 	
-	public String ciudadDeReserva( Reserva reserva ){
-		return reserva.ciudadDeReserva();
+	//devuelvo una colleccion de reservas en una ciudad dada
+	public Collection<Reserva> reservasEnCiudad( Collection<Reserva> reservas, String ciudad ){
+		Collection<Reserva> resultReservas = new ArrayList();
+		for ( Reserva r : reservas){
+			if ( r.getCiudad() == ciudad ){
+				resultReservas.add( r );
+			}
+		}
+		return resultReservas;
 	}
 
 }
