@@ -1,3 +1,5 @@
+package sistema;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -25,11 +27,10 @@ public Buscador( DateTime checkIn, DateTime checkOut,Integer cantPasajeros,Strin
 		
 	public Collection<Habitacion> buscarHabitaciones( Hotel hotel ){
 		Collection<Habitacion> resultHabitaciones = new ArrayList<Habitacion>();
-		//for ( Habitacion h : hotel.getHabitaciones() ){
-		for(int i=0; i< hotel.getHabitaciones().size(); i++){
-			
-			if ( habitacionCumple( hotel.getHabitaciones().get(i))){
-				resultHabitaciones.add(  hotel.getHabitaciones().get(i) );
+		
+		for ( Habitacion h : hotel.getHabitaciones() ){
+			if ( habitacionCumple( h ) ){
+				resultHabitaciones.add( h );
 			}
 		}
 			
@@ -49,7 +50,7 @@ public Buscador( DateTime checkIn, DateTime checkOut,Integer cantPasajeros,Strin
 	
 	//tiene que cumplir disponibilidad y capacidad
 		public boolean habitacionCumple( Habitacion habitacion ){
-			return (habitacion.disponibilidad(fechaEntrada,fechaSalida)&& habitacion.getCapMaxima()>= nroPasajeros);
+			return (habitacion.reservableParaLasFechas(fechaEntrada,fechaSalida)&& habitacion.getCapMaxima()>= nroPasajeros);
 		}
 		
 		//tiene que cumplir disponibilidad, capacidad y ciudad

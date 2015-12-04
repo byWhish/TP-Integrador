@@ -17,14 +17,6 @@ public class Hotelero extends Usuario{
 		
 		
 	}
-
-	@Override
-	public Collection<Reserva> getReservas(Collection<Reserva> reservas) {
-		
-		Collection<Reserva> resultReservas = new ArrayList<Reserva>();
-		
-		return resultReservas;
-	}
 	
 	public Collection<Reserva> reservasFuturas(Collection<Reserva> reservas) {
 		
@@ -39,6 +31,11 @@ public class Hotelero extends Usuario{
 		}
 		
 		return resultReservas;
+	}
+
+	@Override
+	public boolean reservaDelUsuario(Reserva reserva) { 
+		return reserva.getHotel() == this.hotel;
 	}
 
 }

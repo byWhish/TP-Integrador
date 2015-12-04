@@ -23,7 +23,7 @@ public class TestSistema extends TestCase{
 		miSistema = new Sistema();
 		miUsuario = new Pasajero( "tito@gmail.com","1234" );
 		miHotel = new Hotel();
-		miHabitacion = new Habitacion(10, miHotel, 2, 1);
+		miHabitacion = new Habitacion(10.0, miHotel, 2, "1 cama");
 		miReserva = new Reserva(new DateTime(2015,12,1,0,0), new DateTime(2015,12,1,0,0), 2, new Pasajero( "tito@gmail.com", "1234"), miHabitacion);
 		
 		miSistema.agregarUsuario( miUsuario );

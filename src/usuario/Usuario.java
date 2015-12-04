@@ -1,5 +1,6 @@
 package usuario;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import sistema.Reserva;
@@ -22,6 +23,19 @@ public abstract class Usuario {
 		return this.pass;
 	}
 	
-	public abstract Collection<Reserva> getReservas( Collection<Reserva> reservas );
+	//getReservas devuelve todas las reservas de un usuario que cumpla la condicion que 
+	//puede ser diferente para cada clase de usuario
+	public Collection<Reserva> getReservas( Collection<Reserva> reservas ){
+		Collection<Reserva> resultReserva = new ArrayList<Reserva>();
+		for ( Reserva r : reservas ){
+			if ( reservaDelUsuario( r ) ){
+				resultReserva.add( r );
+			}  
+		} 
+		return resultReserva;
+		}
+	
+	//reserva del usuario es la condicion para saber si la reserva le pertenece al usuario
+	public abstract boolean reservaDelUsuario( Reserva reserva );
 
 }

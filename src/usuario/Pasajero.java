@@ -13,9 +13,9 @@ public class Pasajero extends Usuario{
 		super(eMail, pass);
 	}
 
-	public Collection<Reserva> getReservas( Collection<Reserva> reservas ){
-		Collection<Reserva> resultReserva = new ArrayList<Reserva>();
-		return resultReserva;
+	public boolean reservaDelUsuario( Reserva reserva ){
+		
+			return ( reserva.getUsuario() == this );
 		}
 	
 	public Collection<Reserva> reservasFuturas( Collection<Reserva> reservas){
@@ -45,4 +45,5 @@ public class Pasajero extends Usuario{
 	public String ciudadDeReserva( Reserva reserva ){
 		return reserva.ciudadDeReserva();
 	}
+
 }

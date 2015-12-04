@@ -54,4 +54,8 @@ public class Reserva {
 		return usuario;
 	}
 
+	public Hotel getHotel() {
+		return this.habitacion.getHotel();
+	}
+
 }

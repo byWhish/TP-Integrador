@@ -9,12 +9,27 @@ import java.util.Collection;
  *  Un Hotel esta ubicado en una determinada ciudad y posee un conjunto de Habitaciones y Servicios.*/
 public class Hotel {
 	
+	private String nombre;
+	private String pais;
+	private String ciudad;
+	private String direccion;
+	private String telefono;
+	private String correoElectronico;
+	private int categoria;
+	private String horaCheckIn;
+	private String horaCheckOut;
 	private Collection<Habitacion> habitaciones;
 	private Collection<Servicio> servicios;
-	private String ciudad;
+	private Collection<String> formasDePago;
+	
+	
+	
+	public Hotel(){
+		
+	}
 	
 	/** Constructor de la clase Hotel.
-	 * Recibe como parametros unas habitaciones (Collection<Habitacion>), servicios (Collection<Servicio>) ofrecidos y una ciudad (String).*/
+	 * Recibe como parametros unas habitaciones (Collection<Habitacion>), servicios (Collection<Servicio>) ofrecidos y una ciudad (String).*/	
 	public Hotel(Collection<Habitacion> habitaciones, Collection<Servicio> servicios, String ciudad) {
 		this.habitaciones = habitaciones;
 		this.servicios = servicios;
