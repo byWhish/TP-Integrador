@@ -13,11 +13,13 @@ public class Sistema {
 	
 	private Collection<Usuario> usuarios;
 	private Collection<Reserva> reservas;
+	private Collection<Hotel> hotel;
 	
 	
 	//constructor de la clase solo seteo las listas
 	public Sistema(){
 		this.usuarios = new ArrayList<Usuario>();
+		this.hotel = new ArrayList<Hotel>();
 		this.reservas = new ArrayList<Reserva>();
 	}
 	
