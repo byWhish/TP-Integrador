@@ -4,51 +4,57 @@ import org.joda.time.DateTime;
 
 import hotel.Habitacion;
 import hotel.Hotel;
+import hotel.PeriodoDeFechas;
+import usuario.Hotelero;
 import usuario.Usuario;
 
-public class Reserva {
+public class Reserva implements Filtrable{
 
-	//una reseva tiene una fecha de checkIn, checkOut, una cantidad de pasajeros un usuario y una habitacion
+	//una reseva tiene una fecha de entrada, de salida, una cantidad de pasajeros un usuario y una habitacion
 	private DateTime fechaEntrada;
 	private DateTime fechaSalida;
 	private Integer cantidadPasajeros;
 	private Usuario usuario;
 	private Habitacion habitacion;
 
-	public Reserva( DateTime checkIn, DateTime checkOut, Integer cantPasajeros, Usuario usuario, Habitacion habitacion ){
-		this.fechaEntrada = checkIn;
-		this.fechaSalida = checkOut;
+	/** Constructor de la clase Reserva.
+	 * @param fechaEntrada	DateTime
+	 * @param fechaSalida	DateTime
+	 * @param cantPasajero	Integer
+	 * @param usuario		Usuario
+	 * @param habitacion	Habitacion*/
+	public Reserva( DateTime fechaEntrada, DateTime fechaSalida, Integer cantPasajeros, Usuario usuario, Habitacion habitacion ){
+		this.fechaEntrada = fechaEntrada;
+		this.fechaSalida = fechaSalida;
 		this.cantidadPasajeros = cantPasajeros;
 		this.usuario = usuario;
 		this.habitacion = habitacion;
-		
 	}
 	
-	//devuelvo la ciudad de la reserva
-	public String ciudadDeReserva(){
-		return this.habitacion.getCiudad();
-	}
-	
-
 	public Habitacion getHabitacion() {
 		return habitacion;
 	}
 
-	public void setHabitacion(Habitacion habitacion) {
+	/* CREO QUE ESTE MENSAJE NO ES NECESARIO... abel
+	 
+	 * public void setHabitacion(Habitacion habitacion) {
 		this.habitacion = habitacion;
+	}*/
+
+	/** Se responde con un periodo de fechas que va desde la fecha de entrada 
+	 * hasta la fecha de salida de la reserva recibidora.
+	 * @author abel*/
+	public PeriodoDeFechas periodoDeLaReserva() {
+		return new PeriodoDeFechas(this.fechaEntrada, this.fechaSalida);
 	}
-
-
 
 	public DateTime getFechaEntrada() {
 		return fechaEntrada;
 	}
 
-
 	public Integer getCantidadPasajeros() {
 		return cantidadPasajeros;
 	}
-
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -59,12 +65,13 @@ public class Reserva {
 	}
 	
 	public String getCiudad(){
-		return this.getHotel().getCiudad();
+		return this.habitacion.getCiudad();
 	}
 
-	public void setHotel(Hotel hotel) {
-		this.habitacion.sethotel( hotel );
-		
+	@Override
+	public boolean cumple(String Ciudad) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

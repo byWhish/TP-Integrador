@@ -5,46 +5,46 @@ import java.util.Collection;
 
 import org.joda.time.DateTime;
 
-import hotel.Habitacion;
 import hotel.Hotel;
+import sistema.Filtro;
 import sistema.Reserva;
 
-public class Hotelero extends Usuario{
+public class Hotelero extends Usuario implements Filtro{
 
-	//private Hotel hotel;
-	
 	public Hotel hotel;
-	public Hotelero(String eMail, String pass) {
+	
+	/** Constructor de Hotelero que recibe como parámetro un eMail (String) y un pass (String).
+	 * @param eMail String
+	 * @param pass String
+	 * @param hotelAdministrado Hotel
+	 * @author abel*/
+	public Hotelero(String eMail, String pass, Hotel hotelAdministrado) {
 		super(eMail, pass);
-		
+		this.hotel = hotelAdministrado;
 		
 	}
 	
 	//devuelvo las reservas a partir de N dias
 	public Collection<Reserva> reservasAPartirDeNDias( int cantidadDias, Collection<Reserva> reservas ){
-		
 		DateTime toDay = new DateTime();
-		
-		return reservasAPartirDeFecha( toDay.plusDays( cantidadDias ), reservas );
-		
+		return reservasAPartirDeFecha( toDay.plusDays( cantidadDias ), reservas );		
 	}
 	
 	
-	//devuelvo las reservas actuales aquellas donde los pasajeros estan en el hotel actualmente
+	/** Se responde con las reservas que están siendo actualmente ocupadas en el Hotel
+	 * administrado por el Hotelero.*/
 	public Collection<Reserva> reservasActuales( Collection<Reserva> reservas ){
-		
 		Collection<Reserva> resultReservas = new ArrayList<Reserva>();
-		
+		DateTime toDay = new DateTime();
 		reservas = this.getReservas( reservas );
-		
-		for ( Reserva r : reservas ){
-			if ( r.getFechaEntrada().isBeforeNow()){
-				resultReservas.add( r );
-			}
-		}
-		
-		return resultReservas;
+			for ( Reserva unaReserva : reservas ){
 				
+				//MODIFICACION abel - correcion if...
+				if ( unaReserva.periodoDeLaReserva().estaIncluidoEnElPeriodoLaFecha(toDay) ){
+					resultReservas.add( unaReserva );
+				}
+			}
+		return resultReservas;
 	}
 	
 	
@@ -53,7 +53,11 @@ public class Hotelero extends Usuario{
 	//condicion particular para obtener las reservas de un hotelero
 	//como la reserva conoce al hotel lo comparo con el hotel que conoce el hotelero
 	public boolean reservaDelUsuario(Reserva reserva) { 
-		return reserva.getHotel() == this.hotel;
+		return reserva.getHotel() == hotel;
+	}
+	
+	public Hotel getHotel(){
+		return this.hotel;
 	}
 
 }

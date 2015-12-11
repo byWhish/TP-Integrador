@@ -11,67 +11,94 @@ import usuario.Usuario;
 
 public class Sistema {
 	
-	private Collection<Usuario> usuarios;
-	private Collection<Reserva> reservas;
-	private Collection<Hotel> hotel;
+	private Collection<Usuario> usuarios = new ArrayList<Usuario>();
+	private Collection<Reserva> reservas = new ArrayList<Reserva>();
+	private Collection<Hotel> hoteles = new ArrayList<Hotel>();
 	
-	
-	//constructor de la clase solo seteo las listas
-	public Sistema(){
-		this.usuarios = new ArrayList<Usuario>();
-		this.hotel = new ArrayList<Hotel>();
-		this.reservas = new ArrayList<Reserva>();
-	}
-	
+		
 	//agrego un usuario al sistema
-	public void agregarUsuario( Usuario usuario ){
+	public void registrarUsuario( Usuario usuario ){
 		usuarios.add( usuario );
 	}
 	
-	//agrego una reserva al sistema
-	public void agregarReserva( Reserva reserva ){
-		reservas.add( reserva );
+	
+	/** Dado unHotel, se lo registra agregandoselo a la lista de hoteles del sistema.
+	 * @param unHotel Hotel
+	 * @author abel*/
+	public void registrarHotel(Hotel unHotel) {
+		this.hoteles.add(unHotel);
 	}
 	
-	//cancelo una reserva del sistema
 	public void cancelarReserva( Reserva reserva ){
 		reservas.remove( reserva );
 	}
 	
-	//devuelvo una reserva con la habitacion modificada
-	public Reserva modificarReserva ( Reserva reserva, Habitacion habitacion ){
-		reserva.setHabitacion( habitacion );
-		return reserva;
-	}
 	
-	//devuelvo un usuario que responda a un correo y un pass
-	public Usuario logIn( String eMail, String pass ){
-		
+	//public Reserva modificarReserva ( reserva Reserva, Hotel hotel habitacion )
+	public Usuario logIn( String eMail, String pass ){	
 		Usuario resultUsuario = null;
-		
-		for( Usuario u : this.usuarios ){
-			if ( u.getEmail() == eMail  &&  u.getPass() == pass ){
-				resultUsuario = u;
+			for( Usuario u : this.usuarios ){
+				if ( u.getEmail() == eMail  &&  u.getPass() == pass ){
+					resultUsuario = u;
+				}
 			}
-		} 
 		return resultUsuario;
 	}
 	
 	
-	//para poder concretar la reserva necesito verifcar que no este ya reservada
-	public void reservarHabitacion( Habitacion habitacion, Usuario pasajero, Buscador busqueda ){
-		
-		if ( habitacion.reservableParaLasFechas(busqueda.getFechaIngreso(), busqueda.getFechaSalida() )){
-		
-		Reserva newReserva = new Reserva( busqueda.getFechaIngreso(), busqueda.getFechaSalida(), busqueda.getCantidadPasajeros(), pasajero, habitacion );
-		
-		reservas.add( newReserva );
-	}
-
-}
-	//devuelvo todas las reservas del sistema
-	public Collection<Reserva> getReservas(){
-		return this.reservas;
+	/** Dados una fechaEntrada, una fechaSalida, una cantidadPasajeros y una ciudad, se instancia y reponde con una 
+	 * nueva busqueda para buscar habitaciones en hoteles.
+	 * @author abel*/
+	public Buscador nuevaBusqueda(DateTime fechaEntrada, DateTime fechaSalida, Integer cantidadPasajeros, String ciudad) {
+		return new Buscador(fechaEntrada, fechaSalida, cantidadPasajeros, ciudad, this);
 	}
 	
+	
+	/** Dados una habitación, un pasajero y una busqueda, que contiene los parámetros de búsqueda del pasajero, se intenta
+	 * realizar una nueva reserva para la habitación dada. Si la habitación está disponible para ser reservada, se realiza
+	 * la reserva y se la guarda en la lista de reservas del sistema.
+	 * 
+	 * 	Una habitación está disponible para ser reservada si y solo si se cumplen las siguientes condiciones:
+	 * 	- La habitación no ha sido reservada por otro Usuario para ninguna de las fechas almacenadas en los parámetros
+	 * 	de búsqueda;
+	 * 	- La habitación puede ser reservable para las fechas dadas, es decir, el hotelero que administra la habitación
+	 * 	permite que la habitación pueda ser reservada para esas fechas.
+	 * @author ¿?
+	 * */ 
+	public void reservarHabitacion( Habitacion unaHabitacion, Usuario unPasajero, Buscador unaBusqueda ){
+		//MODIFICACION abel - correccion if
+		if ( this.habitacionEstaDisponibleParaReserva(unaHabitacion, unaBusqueda.getFechaIngreso(), unaBusqueda.getFechaSalida()) ){
+			Reserva nuevaReserva = new Reserva( unaBusqueda.getFechaIngreso(), unaBusqueda.getFechaSalida(), unaBusqueda.getCantidadPasajeros(), unPasajero, unaHabitacion );
+			getReservas().add( nuevaReserva );
+		}
+	}
+
+	
+	/** Se responde si unaHabitacion está disponible para ser reservada a partir desde una fechaInicio hasta una fechaFin.
+	 * @author abel*/
+	public boolean habitacionEstaDisponibleParaReserva(Habitacion unaHabitacion, DateTime fechaInicio, DateTime fechaFin) {
+		return 	unaHabitacion.noEstaCanceladaParaLasFechas(fechaInicio,fechaFin) &&
+				! this.habitacionHaSidoReservada(unaHabitacion, fechaInicio, fechaFin);
+	}
+
+	
+	/** Se responde si unaHabitacion tiene alguna reserva realizada en el sistema para alguna de las fechas del periodo
+	 * que va desde la fechaInicio hasta la fechaFin.
+	 * @author abel*/
+	private boolean habitacionHaSidoReservada(Habitacion unaHabitacion, DateTime fechaInicio, DateTime fechaFin) {
+		for(Reserva unaReserva: this.getReservas() ) {
+			if(	unaReserva.getHabitacion() == unaHabitacion &&
+				unaReserva.periodoDeLaReserva().seIntersectaConElPeriodo(fechaInicio, fechaFin)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
+	/** Se responde con la colección de todas las reservas realizadas en el Sistema.
+	 * @author abel*/
+	private Collection<Reserva> getReservas() {
+		return this.reservas;
+	}
 }

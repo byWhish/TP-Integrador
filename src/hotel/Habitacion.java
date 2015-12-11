@@ -6,6 +6,10 @@ import java.util.Collection;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import sistema.Filtrable;
+import sistema.Filtro;
+import usuario.Hotelero;
+
 /** Habitacion modela toda la informaci贸n relevante de una habitaci贸n de un determinado Hotel.
  * Posee la siguiente informaci贸n:
  * 
@@ -22,25 +26,29 @@ import org.joda.time.Days;
  * 
  * El administrador puede asignar fechas no-reservables, las cuales son, periodos de fechas en
  * los que la habitaci贸n no puede ser reservada por nadie.
- * */
-public class Habitacion {
+ * @author abel */
+public class Habitacion implements Filtrable{
 
 		private Integer capacidadMaxima;
 		private String camas;
 		private Collection<String> servicios;
 		private Double precioBasePorNoche;
-		private ArrayList<PeriodoDeFechas> fechasNoReservables = new ArrayList<PeriodoDeFechas>();
-		private ArrayList<Promocion> promociones = new ArrayList<Promocion>();
+		private Collection<PeriodoDeFechas> fechasCanceladas = new ArrayList<PeriodoDeFechas>();
+		private Collection<Promocion> promociones = new ArrayList<Promocion>();
 		private Hotel hotel;
 
 		/** Constructor de Habitacion que recibe como par谩metros un precioBase por noche, un hotel, una capMax (capacidad m谩xima)
-		 * y las camas.*/
-		public Habitacion(Double precioBase, Hotel hotel, int capMax, String camas) {
+		 * y las camas.
+		 * @param precioBase Double
+		 * @param hotel Hotel
+		 * @param capMax Integer
+		 * @param camas String
+		 * @author abel*/
+		public Habitacion(Double precioBase, Hotel hotel, Integer capMax, String camas) {
 			this.setPrecioBasePorNoche(precioBase);
 			this.capacidadMaxima = capMax;
 			this.camas = camas;
 			this.hotel = hotel;
-			
 		}
 		
 
@@ -51,7 +59,7 @@ public class Habitacion {
 		 * 		Este mensaje solo calcula el precio de la estad铆a en el periodo de fechas dado, no consulta
 		 * 		ni toma en cuenta si la habitaci贸n est谩 disponible o no en ese periodo de fechas.
 		 * 		Esa	responsabilidad es del Sistema.
-		 * */
+		 * @author abel*/
 		public Double precioPorEstadia(DateTime fechaEntrada, DateTime fechaSalida) {
 			Double precioPorLaEstadia = 0.0;
 			Integer cantidadDeDias = Days.daysBetween(fechaEntrada, fechaSalida).getDays();//...cantidad de d铆as entre fechaEntrada y fechaSalida
@@ -76,9 +84,9 @@ public class Habitacion {
 		 * y fechaFin.
 		 * 	Todas las habitaciones pueden tener uno o varios periodos de fechas en que no puede ser reservada.
 		 * 	Este periodo de fechas es dado por el administrador del Hotel.
-		 * */
-		public boolean reservableParaLasFechas(DateTime fechaInicio, DateTime fechaFin) {
-			for(PeriodoDeFechas unPeriodoNoReservable: fechasNoReservables) {
+		 * @author abel*/
+		public boolean noEstaCanceladaParaLasFechas(DateTime fechaInicio, DateTime fechaFin) {
+			for(PeriodoDeFechas unPeriodoNoReservable: fechasCanceladas) {
 				if(unPeriodoNoReservable.seIntersectaConElPeriodo(fechaInicio, fechaFin)) {
 					return false;
 				}
@@ -88,7 +96,7 @@ public class Habitacion {
 		
 		
 		/** Se agrega un periodo de promoci贸n a las promociones de la habitaci贸n.
-		 * */
+		 * @author abel*/
 		public void agregarNuevoPeriodoDePromocion(DateTime fechaInicio, DateTime fechaFin, Double precio) {
 			this.promociones.add(new Promocion(fechaInicio, fechaFin, precio));			
 		}
@@ -98,44 +106,64 @@ public class Habitacion {
 		 * no estar谩 disponible.
 		 * Este periodo de fechas puede ser cargado por el administrador del hotel al que pertenece
 		 * esta habitaci贸n.
-		 * */
+		 * @author abel*/
 		public void agregarNuevoPeriodoNoReservable(DateTime fechaInicio, DateTime fechaFin) {
-			this.fechasNoReservables.add(new PeriodoDeFechas(fechaInicio, fechaFin));
+			this.fechasCanceladas.add(new PeriodoDeFechas(fechaInicio, fechaFin));
 		}
 
 //Getters&Setters-----------------------------------------------------------------------------
 		
-		/** Se responde con el Hotel al que pertenece la habitaci贸n.*/
+		/** Se responde con el Hotel al que pertenece la habitaci贸n.
+		 * @author abel*/
 		public Hotel getHotel() {
 			return this.hotel;
 		}
 		
-		/** Dado un precio, se actualiza el valor del precio base para habitacion recibidora.*/
+		/** Dado un precio, se actualiza el valor del precio base para habitacion recibidora.
+		 * @author abel*/
 		public void setPrecioBasePorNoche(Double precioBase) {
 			this.precioBasePorNoche = precioBase;			
 		}
 		
-		/** Se responde cu谩l es el precio b谩sico por noche para la habitaci贸n.*/
+		/** Se responde cu谩l es el precio b谩sico por noche para la habitaci贸n.
+		 * @author abel*/
 		public Double getPrecioBasePorNoche() {
 			return this.precioBasePorNoche;
 		}
 		
-		/** Con esto devuelvo la ciudad de la habitacion*/
+		//Con esto devuelvo la ciudad de la habitacion
 		public String getCiudad(){
 			return this.getHotel().getCiudad();
 		}
 
-
-		public int getCapMaxima() {
+		/** Se responde con la capacidad m醲ima de pasajeros que la habitaci髇 puede albergar.*/
+		public int getCapacidadMaxima() {
 			return this.capacidadMaxima;
+		}
+		
+		/** Se responde con la informaci髇 de camas de la habitaci髇.
+		 * @author abel*/
+		public String getCamas() {
+			return this.camas;
+		}
+		
+		/** Se responde con la lista de servicios ofrecidos por la habitaci髇.
+		 * @author abel*/
+		public Collection<String> getServicios() {
+			return this.servicios;
+		}
+//finSetters&Getters--------------------------------------------------------------------------
+
+		//
+		public boolean esDelHotelero( Hotelero hotelero ) {
+			// TODO Auto-generated method stub
+			return this.getHotel() == hotelero.getHotel();
 		}
 
 
-		public void sethotel(Hotel hotel2) {
-			this.hotel = hotel;
+		@Override
+		public boolean cumple(String ciudad) {
 			
-		};
-		
-		
-//finSetters&Getters--------------------------------------------------------------------------
+			return this.getCiudad() == ciudad;
+		}
 }
