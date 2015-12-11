@@ -1,5 +1,6 @@
 package filtro;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import hotel.Habitacion;
@@ -11,6 +12,9 @@ public class FiltroCompuesto extends FiltroComponente{
 	
 	private Collection<FiltroComponente> filtros;
 	
+	public FiltroCompuesto(){
+		filtros = new ArrayList<FiltroComponente>();
+	}
 	
 	//agrego un filtro nuevo
 	public void componerFiltro( FiltroComponente filtro){
@@ -21,12 +25,14 @@ public class FiltroCompuesto extends FiltroComponente{
 	
 	@Override
 	public boolean cumple(Filtrable item) {
+		
 		boolean result = true;
+		
 		for(FiltroComponente f : filtros){
 			result = result && f.cumple(item);
 		}
 		return result;
-	}
+	} 
 
 
 }

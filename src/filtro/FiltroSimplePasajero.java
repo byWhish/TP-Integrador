@@ -1,7 +1,5 @@
-package sistema;
+package filtro;
 
-import filtro.Filtrable;
-import filtro.FiltroComponente;
 import usuario.Pasajero;
 
 public class FiltroSimplePasajero extends FiltroComponente{
