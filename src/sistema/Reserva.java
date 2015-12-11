@@ -2,10 +2,12 @@ package sistema;
 
 import org.joda.time.DateTime;
 
+import filtro.Filtrable;
 import hotel.Habitacion;
 import hotel.Hotel;
 import hotel.PeriodoDeFechas;
 import usuario.Hotelero;
+import usuario.Pasajero;
 import usuario.Usuario;
 
 public class Reserva implements Filtrable{
@@ -66,12 +68,6 @@ public class Reserva implements Filtrable{
 	
 	public String getCiudad(){
 		return this.habitacion.getCiudad();
-	}
-
-	@Override
-	public boolean cumple(String Ciudad) {
-		// TODO Auto-generated method stub
-		return true;
 	}
 
 }

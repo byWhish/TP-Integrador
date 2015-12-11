@@ -3,7 +3,10 @@ package hotel;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import sistema.Filtrable;
+import filtro.Filtrable;
+import usuario.Hotelero;
+import usuario.Pasajero;
+import usuario.Usuario;
 
 /** La clase Hotel modela hoteles, los cuales se hubican en ciudades. Los hoteles ofrecen sus habitaciones para
  * el alojamiento de pasajeros, los cuales reservan habitaciones a través de un Sistema web. 
@@ -154,9 +157,15 @@ public class Hotel implements Filtrable{
 	}
 
 	@Override
-	public boolean cumple(String ciudad) {
+	public Usuario getUsuario() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-		return this.getCiudad() == ciudad;
+	@Override
+	public Hotel getHotel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 //finGettersYSetters--------------------------------------------------------------------

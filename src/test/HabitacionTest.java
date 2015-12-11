@@ -112,10 +112,5 @@ public class HabitacionTest extends TestCase {
 		assertEquals(unaHabitacion.precioPorEstadia(fechaInicio, fechaFin2), 840.0);
 	}
 	
-	//aserto la ciudad para usarla en el patron composite
-	public void testCumple(){
-		Mockito.when(unHotel.getCiudad()).thenReturn("Roma");
-		assertTrue(unaHabitacion.cumple("Roma"));
-	}
 
 }

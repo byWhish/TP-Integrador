@@ -6,10 +6,9 @@ import java.util.Collection;
 import org.joda.time.DateTime;
 
 import hotel.Hotel;
-import sistema.Filtro;
 import sistema.Reserva;
 
-public class Hotelero extends Usuario implements Filtro{
+public class Hotelero extends Usuario{
 
 	public Hotel hotel;
 	

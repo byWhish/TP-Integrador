@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
-import sistema.Filtro;
 import sistema.Reserva;
 
-public class Pasajero extends Usuario implements Filtro{
+public class Pasajero extends Usuario{
 
 	/** Constructor de la clase Pasajero.
 	 * @param eMail String

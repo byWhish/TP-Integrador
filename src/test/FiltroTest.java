@@ -4,33 +4,50 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import filtro.FiltroComponente;
+import filtro.FiltroCompuesto;
+import filtro.FiltroSimpleCiudad;
+import filtro.FiltroSimpleHotelero;
 import hotel.Habitacion;
 import hotel.Hotel;
 import junit.framework.TestCase;
-import sistema.FiltroSimple;
+import sistema.FiltroSimplePasajero;
+import sistema.Reserva;
 import usuario.Hotelero;
+import usuario.Pasajero;
 
 public class FiltroTest extends TestCase{
 
 	@Mock private Hotel myHotel;
 	@Mock private Habitacion myHabitacion;
-	FiltroSimple myFiltroHotel;
-	FiltroSimple myFiltroHabitacion;
+	@Mock private Reserva myReserva;
+	@Mock private Pasajero myPasajero;
+	@Mock private Hotelero myHotelero;
+	
+	FiltroComponente myFiltroHotelCiudad;
+	FiltroComponente myFiltroReservaPasajero;
+	FiltroComponente myFiltroReservaHotelero;
+	FiltroCompuesto myFiltroReservaCompuesto;
 	String ciudad;
 	
 	public void setUp(){
 		MockitoAnnotations.initMocks(this);
-		myFiltroHotel = new FiltroSimple();
-		myFiltroHabitacion = new FiltroSimple();
+		myFiltroHotelCiudad = new FiltroSimpleCiudad("Roma");
+		myFiltroReservaPasajero = new FiltroSimplePasajero( myPasajero );
+		myFiltroReservaHotelero = new FiltroSimpleHotelero( myHotelero );
 		ciudad = "Roma";
 	}
 	
-	public void testFiltro(){
+	public void testFiltroSimple(){
 		
-		Mockito.when(myHotel.cumple( ciudad )).thenReturn( true );
-		Mockito.when(myHabitacion.cumple( ciudad )).thenReturn( true );
+	Mockito.when(myHotel.getCiudad()).thenReturn("Roma");
+	Mockito.when(myReserva.getUsuario()).thenReturn(myPasajero);
+	Mockito.when(myReserva.getHotel()).thenReturn(myHotel);
+	Mockito.when(myHotelero.getHotel()).thenReturn(myHotel);
+	
+	assertTrue( myFiltroHotelCiudad.cumple(myHotel) );
+	assertTrue( myFiltroReservaPasajero.cumple(myReserva) );
+	assertTrue( myFiltroReservaHotelero.cumple(myReserva) );
 		
-		assertTrue( myFiltroHotel.cumpleConLaBusqueda( myHotel, ciudad ));
-		assertTrue( myFiltroHabitacion.cumpleConLaBusqueda( myHabitacion, ciudad ));
 	}
 }

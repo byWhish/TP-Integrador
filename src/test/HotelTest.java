@@ -107,9 +107,4 @@ public class HotelTest extends TestCase {
 		assertEquals("4200-0000", unHotel.getTelefono());
 	}
 	
-	public void testCumple(){
-		
-		assertTrue( unHotel.cumple( "Quilmes" ));
-		
-	}
 }

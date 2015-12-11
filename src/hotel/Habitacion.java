@@ -6,9 +6,10 @@ import java.util.Collection;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import sistema.Filtrable;
-import sistema.Filtro;
+import filtro.Filtrable;
 import usuario.Hotelero;
+import usuario.Pasajero;
+import usuario.Usuario;
 
 /** Habitacion modela toda la información relevante de una habitación de un determinado Hotel.
  * Posee la siguiente información:
@@ -156,14 +157,15 @@ public class Habitacion implements Filtrable{
 
 		//
 		public boolean esDelHotelero( Hotelero hotelero ) {
-			// TODO Auto-generated method stub
+
 			return this.getHotel() == hotelero.getHotel();
 		}
 
 
 		@Override
-		public boolean cumple(String ciudad) {
-			
-			return this.getCiudad() == ciudad;
+		public Usuario getUsuario() {
+			// TODO Auto-generated method stub
+			return null;
 		}
+
 }
