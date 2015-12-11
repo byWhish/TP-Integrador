@@ -1,5 +1,9 @@
 package test;
 
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+
 import hotel.Habitacion;
 import hotel.Hotel;
 import hotel.Servicio;
@@ -9,12 +13,14 @@ import junit.framework.TestCase;
  * @author abel*/
 public class HotelTest extends TestCase {
 
+	@Mock private Habitacion unaHabitacion;
+	
 	private Hotel unHotel;
-	private Habitacion unaHabitacion;
 	private Servicio unServicio;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
+		MockitoAnnotations.initMocks(this);
 		unHotel = new Hotel("hotel1", "Argentina", "Quilmes", "123 nº 456", "4200-0000",
 							"hotel1@hotel.com", 3 ,3, 4);
 	}
@@ -94,5 +100,16 @@ public class HotelTest extends TestCase {
 		unHotel.agregarUnaNuevaFormaDePagoAceptada("VISA");
 		
 		assertTrue(unHotel.getFormasDePagoAceptadas().contains("VISA"));		
+	}
+	
+	public void testTelefono(){
+		
+		assertEquals("4200-0000", unHotel.getTelefono());
+	}
+	
+	public void testCumple(){
+		
+		assertTrue( unHotel.cumple( "Quilmes" ));
+		
 	}
 }

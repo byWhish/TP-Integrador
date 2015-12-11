@@ -116,7 +116,7 @@ public class Habitacion implements Filtrable{
 		/** Se responde con el Hotel al que pertenece la habitación.
 		 * @author abel*/
 		public Hotel getHotel() {
-			return this.hotel;
+			return hotel;
 		}
 		
 		/** Dado un precio, se actualiza el valor del precio base para habitacion recibidora.
