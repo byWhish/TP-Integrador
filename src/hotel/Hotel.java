@@ -3,6 +3,8 @@ package hotel;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.joda.time.DateTime;
+
 import filtro.Filtrable;
 import usuario.Hotelero;
 import usuario.Pasajero;
@@ -166,6 +168,24 @@ public class Hotel implements Filtrable{
 	public Hotel getHotel() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public DateTime getFechaEntrada() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DateTime getFechaSalida() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getCapacidadMaxima() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 //finGettersYSetters--------------------------------------------------------------------

@@ -30,7 +30,7 @@ import usuario.Usuario;
  * @author abel */
 public class Habitacion implements Filtrable{
 
-		private Integer capacidadMaxima;
+		private int capacidadMaxima;
 		private String camas;
 		private Collection<String> servicios;
 		private Double precioBasePorNoche;
@@ -164,6 +164,20 @@ public class Habitacion implements Filtrable{
 
 		@Override
 		public Usuario getUsuario() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+		@Override
+		public DateTime getFechaEntrada() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+		@Override
+		public DateTime getFechaSalida() {
 			// TODO Auto-generated method stub
 			return null;
 		}

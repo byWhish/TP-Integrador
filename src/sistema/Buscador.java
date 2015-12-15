@@ -1,12 +1,18 @@
 package sistema;
 
+import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.joda.time.DateTime;
 
+import filtro.FiltroCompuesto;
+import filtro.FiltroSimpleCantidadPasajeros;
+import filtro.FiltroSimpleCiudad;
+import filtro.FiltroSimpleFechas;
 import hotel.Habitacion;
 import hotel.Hotel;
+import hotel.PeriodoDeFechas;
 
 
 public class Buscador {
@@ -57,10 +63,15 @@ public class Buscador {
 		
 	//tiene que cumplir disponibilidad, capacidad y ciudad
 	public boolean hotelCumple( Hotel hotel){
+		FiltroCompuesto myFiltro = new FiltroCompuesto();
+		myFiltro.componerFiltro(new FiltroSimpleCiudad(this.ciudad));
+		myFiltro.componerFiltro(new FiltroSimpleCantidadPasajeros(this.nroPasajeros));
+		myFiltro.componerFiltro(new FiltroSimpleFechas( new PeriodoDeFechas(this.fechaEntrada, this.fechaSalida)));
+		
 		if(hotel.getCiudad() == ciudad ){
 			// pregunta a cada habitacion del hotel si cumple la condicion o no 
 			for(Habitacion h : hotel.getHabitaciones()){
-				if(habitacionCumple(h)){
+				if(myFiltro.cumple(h)){
 					return true; 
 				}
 			}

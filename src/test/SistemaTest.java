@@ -30,6 +30,8 @@ public class SistemaTest extends TestCase{
 		miSistema.registrarUsuario( miPasajero );	
 		miSistema.registrarUsuario(controlPasajero1);
 		miSistema.registrarUsuario(controlPasajero2);
+		
+		miSistema.registrarHotel(miHotel);
 	}
 	
 	public void testLogIn(){
