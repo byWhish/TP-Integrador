@@ -61,8 +61,6 @@ public class FiltroTest extends TestCase{
 	Mockito.when(myReserva.getUsuario()).thenReturn(myPasajero);
 	Mockito.when(myReserva.getHotel()).thenReturn(myHotel);
 	Mockito.when(myReserva.getCiudad()).thenReturn("Roma");
-	Mockito.when(myReserva.getFechaEntrada()).thenReturn( new DateTime(2015,12,2,0,0));
-	Mockito.when(myReserva.getFechaSalida()).thenReturn( new DateTime(2015,12,30,0,0));
 	
 	Mockito.when(myHotelero.getHotel()).thenReturn(myHotel);
 	

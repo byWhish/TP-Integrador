@@ -21,6 +21,7 @@ public class Buscador {
 	private DateTime fechaEntrada;
 	private DateTime fechaSalida;
 	private Sistema sistema;
+	private FiltroCompuesto myFiltro = new FiltroCompuesto();
 		
 	/*MODIFICACION - abel
 	 * - CheckIn es el horario en el que el pasajero debe presentarse en el hotel para hacer uso de la reserva,
@@ -33,6 +34,10 @@ public class Buscador {
 		this.fechaSalida = fechaSalida;
 		this.nroPasajeros = cantPasajeros;
 		this.ciudad = city;
+		
+		myFiltro.componerFiltro(new FiltroSimpleCiudad(this.ciudad));
+		myFiltro.componerFiltro(new FiltroSimpleCantidadPasajeros(this.nroPasajeros));
+		myFiltro.componerFiltro(new FiltroSimpleFechas( new PeriodoDeFechas(this.fechaEntrada, this.fechaSalida)));
 	}
 	
 		
@@ -63,10 +68,6 @@ public class Buscador {
 		
 	//tiene que cumplir disponibilidad, capacidad y ciudad
 	public boolean hotelCumple( Hotel hotel){
-		FiltroCompuesto myFiltro = new FiltroCompuesto();
-		myFiltro.componerFiltro(new FiltroSimpleCiudad(this.ciudad));
-		myFiltro.componerFiltro(new FiltroSimpleCantidadPasajeros(this.nroPasajeros));
-		myFiltro.componerFiltro(new FiltroSimpleFechas( new PeriodoDeFechas(this.fechaEntrada, this.fechaSalida)));
 		
 		if(hotel.getCiudad() == ciudad ){
 			// pregunta a cada habitacion del hotel si cumple la condicion o no 

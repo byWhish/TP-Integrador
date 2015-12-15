@@ -170,14 +170,7 @@ public class Habitacion implements Filtrable{
 
 
 		@Override
-		public DateTime getFechaEntrada() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-
-		@Override
-		public DateTime getFechaSalida() {
+		public PeriodoDeFechas getPeriodoDeFecha() {
 			// TODO Auto-generated method stub
 			return null;
 		}

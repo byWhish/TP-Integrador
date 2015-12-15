@@ -5,8 +5,11 @@ import java.util.Collection;
 
 import org.joda.time.DateTime;
 
+import filtro.FiltroComponente;
+import filtro.FiltroSimplePasajero;
 import hotel.Habitacion;
 import hotel.Hotel;
+import usuario.Pasajero;
 import usuario.Usuario;
 
 public class Sistema {
@@ -100,5 +103,26 @@ public class Sistema {
 	 * @author abel*/
 	private Collection<Reserva> getReservas() {
 		return this.reservas;
+	}
+	
+	//con esto obtengo todas las reservas de un usuario
+	public Collection<Reserva> getReservasDelUsuario( Pasajero usuario ){
+		Collection<Reserva> resultReservas = new ArrayList<Reserva>();
+		
+		FiltroComponente myFiltro = usuario.obtenerFiltroSimpleUsuario();
+		
+		for ( Reserva r : this.getReservas()){
+			if ( myFiltro.cumple(r)){
+				resultReservas.add(r);
+			}
+		}
+		return resultReservas;
+	}
+	
+	public Collection<Reserva> getReservasDeHabitacion( Habitacion habitacion){
+		Collection<Reserva> resultReserva = new ArrayList<Reserva>();
+		
+		//completar
+		return resultReserva;
 	}
 }

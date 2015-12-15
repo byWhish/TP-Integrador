@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
+import filtro.FiltroComponente;
+import filtro.FiltroSimplePasajero;
 import sistema.Reserva;
 
 public class Pasajero extends Usuario{
@@ -55,6 +57,12 @@ public class Pasajero extends Usuario{
 			}
 		}
 		return resultReservas;
+	}
+
+	@Override
+	public FiltroComponente obtenerFiltroSimpleUsuario() {
+		FiltroSimplePasajero myFiltro = new FiltroSimplePasajero(this);
+		return myFiltro;
 	}
 
 }

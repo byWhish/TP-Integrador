@@ -3,6 +3,7 @@ package filtro;
 import org.joda.time.DateTime;
 
 import hotel.Hotel;
+import hotel.PeriodoDeFechas;
 import usuario.Usuario;
 
 public interface Filtrable {
@@ -13,10 +14,8 @@ public interface Filtrable {
 
 	public Hotel getHotel();
 
-	public DateTime getFechaEntrada();
-
-	public DateTime getFechaSalida();
-
 	public int getCapacidadMaxima();
+
+	public PeriodoDeFechas getPeriodoDeFecha();
 
 }

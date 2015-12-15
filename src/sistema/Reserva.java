@@ -71,14 +71,15 @@ public class Reserva implements Filtrable{
 	}
 
 	@Override
-	public DateTime getFechaSalida() {
-		return fechaSalida;
-	}
-
-	@Override
 	public int getCapacidadMaxima() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public PeriodoDeFechas getPeriodoDeFecha() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import org.joda.time.DateTime;
 
+import filtro.FiltroComponente;
+import filtro.FiltroSimpleHotelero;
 import hotel.Hotel;
 import sistema.Reserva;
 
@@ -57,6 +59,12 @@ public class Hotelero extends Usuario{
 	
 	public Hotel getHotel(){
 		return this.hotel;
+	}
+
+	@Override
+	public FiltroComponente obtenerFiltroSimpleUsuario() {
+		FiltroSimpleHotelero myFiltro = new FiltroSimpleHotelero(this);
+		return myFiltro;
 	}
 
 }

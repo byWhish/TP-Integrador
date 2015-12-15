@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.joda.time.DateTime;
 
+import filtro.FiltroComponente;
 import sistema.Reserva;
 
 public abstract class Usuario {
@@ -63,5 +64,8 @@ public abstract class Usuario {
 		}
 		return resultReservas;
 	}
+	
+	//con esto obtengo el filtro indicado para la sunclase que corresponde
+	public abstract FiltroComponente obtenerFiltroSimpleUsuario();
 
 }

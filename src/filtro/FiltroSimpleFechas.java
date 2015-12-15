@@ -11,8 +11,7 @@ public class FiltroSimpleFechas extends FiltroComponente{
 	}
 	@Override
 	public boolean cumple(Filtrable item) {
-		return unPeriodoDeFechas.estaIncluidoEnElPeriodoLaFecha( item.getFechaEntrada() ) && 
-				unPeriodoDeFechas.estaIncluidoEnElPeriodoLaFecha( item.getFechaSalida() );
+		return unPeriodoDeFechas.seIntersectaConElPeriodo( item.getPeriodoDeFecha());
 	}
 
 }
