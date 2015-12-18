@@ -80,7 +80,7 @@ public class Sistema {
 		//MODIFICACION abel - correccion if
 		if ( unaBusqueda.habitacionEstaDisponibleParaReserva(unaHabitacion, unaBusqueda.getFechaIngreso(), unaBusqueda.getFechaSalida()) ){
 			Reserva nuevaReserva = new Reserva( unaBusqueda.getFechaIngreso(), unaBusqueda.getFechaSalida(), unaBusqueda.getCantidadPasajeros(), unPasajero, unaHabitacion );
-			getReservas().add( nuevaReserva );
+			registrarReserva( nuevaReserva );
 		}
 	}
 	
@@ -88,6 +88,10 @@ public class Sistema {
 	 * @author abel*/
 	public Collection<Reserva> getReservas() {
 		return this.reservas;
+	}
+	
+	public Collection<Hotel> getHoteles(){
+		return this.hoteles;
 	}
 	
 	//con esto obtengo todas las reservas de un usuario 
@@ -104,10 +108,5 @@ public class Sistema {
 		return resultReservas;
 	}
 	
-	public Collection<Reserva> getReservasDeHabitacion( Habitacion habitacion){
-		Collection<Reserva> resultReserva = new ArrayList<Reserva>();
-		
-		//completar
-		return resultReserva;
-	}
+	
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import filtro.FiltroComponente;
+import filtro.FiltroSimpleCiudad;
 import filtro.FiltroSimplePasajero;
 import sistema.Reserva;
 
@@ -39,8 +40,11 @@ public class Pasajero extends Usuario{
 		
 		//MODIFICACION abel - obtener las reservas unicamente del usuario:
 		Collection<Reserva> resultReservas = new ArrayList<Reserva>();
+		
+		FiltroSimpleCiudad myFiltro = new FiltroSimpleCiudad(ciudad);
+		
 		for ( Reserva r : reservasDelUsuario){
-			if ( r.getCiudad() == ciudad ){
+			if ( myFiltro.cumple( r ) ){
 				resultReservas.add( r );
 			}
 		}

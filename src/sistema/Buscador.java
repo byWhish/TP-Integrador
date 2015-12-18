@@ -74,7 +74,9 @@ public class Buscador {
 	//tiene que cumplir disponibilidad, capacidad y ciudad
 	public boolean hotelCumple( Hotel hotel){
 		
-		if(hotel.getCiudad() == ciudad ){
+		FiltroComponente miFiltroCiudad = new FiltroSimpleCiudad(ciudad);
+		
+		if(miFiltroCiudad.cumple(hotel) ){
 			// pregunta a cada habitacion del hotel si cumple la condicion o no 
 			for(Habitacion h : hotel.getHabitaciones()){
 				if(myFiltro.cumple(h) && habitacionEstaDisponibleParaReserva(h, fechaEntrada, fechaSalida )){
@@ -120,6 +122,10 @@ public class Buscador {
 	
 	public Collection<Reserva> getReservas(){
 		return this.reservas;
+	}
+	
+	public Collection<Hotel> getHoteles(){
+		return this.hoteles;
 	}
 		
 }
