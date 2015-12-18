@@ -9,7 +9,7 @@ import filtro.FiltroComponente;
 import filtro.FiltroCompuesto;
 import filtro.FiltroSimpleCantidadPasajeros;
 import filtro.FiltroSimpleCiudad;
-import filtro.FiltroSimpleFechas;
+import filtro.FiltroSimpleFechasFuturas;
 import filtro.FiltroSimpleHotelero;
 import filtro.FiltroSimplePasajero;
 import hotel.Habitacion;
@@ -44,7 +44,7 @@ public class FiltroTest extends TestCase{
 		myFiltroHotelCiudad = new FiltroSimpleCiudad("Roma");
 		myFiltroReservaPasajero = new FiltroSimplePasajero( myPasajero );
 		myFiltroReservaHotelero = new FiltroSimpleHotelero( myHotelero );
-		myFiltroFechas = new FiltroSimpleFechas( myPeriodoDeFechas );
+		myFiltroFechas = new FiltroSimpleFechasFuturas( 2 );
 		myFiltroCantidadPasajeros = new FiltroSimpleCantidadPasajeros(2);
 		
 		myFiltroReservaCompuesto = new FiltroCompuesto();
@@ -61,6 +61,7 @@ public class FiltroTest extends TestCase{
 	Mockito.when(myReserva.getUsuario()).thenReturn(myPasajero);
 	Mockito.when(myReserva.getHotel()).thenReturn(myHotel);
 	Mockito.when(myReserva.getCiudad()).thenReturn("Roma");
+	Mockito.when(myReserva.getFechaEntrada()).thenReturn( new DateTime( 2015,12,25,0,0 ) );
 	
 	Mockito.when(myHotelero.getHotel()).thenReturn(myHotel);
 	

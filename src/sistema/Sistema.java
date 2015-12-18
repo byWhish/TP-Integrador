@@ -19,6 +19,14 @@ public class Sistema {
 	private Collection<Hotel> hoteles = new ArrayList<Hotel>();
 	
 		
+	public Sistema(){
+	
+	}
+	
+	public void registrarReserva(Reserva r){
+		reservas.add(r);
+	}
+	
 	//agrego un usuario al sistema
 	public void registrarUsuario( Usuario usuario ){
 		usuarios.add( usuario );
@@ -53,7 +61,7 @@ public class Sistema {
 	 * nueva busqueda para buscar habitaciones en hoteles.
 	 * @author abel*/
 	public Buscador nuevaBusqueda(DateTime fechaEntrada, DateTime fechaSalida, Integer cantidadPasajeros, String ciudad) {
-		return new Buscador(fechaEntrada, fechaSalida, cantidadPasajeros, ciudad, this);
+		return new Buscador(fechaEntrada, fechaSalida, cantidadPasajeros, ciudad, hoteles, reservas);
 	}
 	
 	
@@ -70,43 +78,20 @@ public class Sistema {
 	 * */ 
 	public void reservarHabitacion( Habitacion unaHabitacion, Usuario unPasajero, Buscador unaBusqueda ){
 		//MODIFICACION abel - correccion if
-		if ( this.habitacionEstaDisponibleParaReserva(unaHabitacion, unaBusqueda.getFechaIngreso(), unaBusqueda.getFechaSalida()) ){
+		if ( unaBusqueda.habitacionEstaDisponibleParaReserva(unaHabitacion, unaBusqueda.getFechaIngreso(), unaBusqueda.getFechaSalida()) ){
 			Reserva nuevaReserva = new Reserva( unaBusqueda.getFechaIngreso(), unaBusqueda.getFechaSalida(), unaBusqueda.getCantidadPasajeros(), unPasajero, unaHabitacion );
 			getReservas().add( nuevaReserva );
 		}
 	}
-
-	
-	/** Se responde si unaHabitacion está disponible para ser reservada a partir desde una fechaInicio hasta una fechaFin.
-	 * @author abel*/
-	public boolean habitacionEstaDisponibleParaReserva(Habitacion unaHabitacion, DateTime fechaInicio, DateTime fechaFin) {
-		return 	unaHabitacion.noEstaCanceladaParaLasFechas(fechaInicio,fechaFin) &&
-				! this.habitacionHaSidoReservada(unaHabitacion, fechaInicio, fechaFin);
-	}
-
-	
-	/** Se responde si unaHabitacion tiene alguna reserva realizada en el sistema para alguna de las fechas del periodo
-	 * que va desde la fechaInicio hasta la fechaFin.
-	 * @author abel*/
-	private boolean habitacionHaSidoReservada(Habitacion unaHabitacion, DateTime fechaInicio, DateTime fechaFin) {
-		for(Reserva unaReserva: this.getReservas() ) {
-			if(	unaReserva.getHabitacion() == unaHabitacion &&
-				unaReserva.periodoDeLaReserva().seIntersectaConElPeriodo(fechaInicio, fechaFin)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	
 	/** Se responde con la colección de todas las reservas realizadas en el Sistema.
 	 * @author abel*/
-	private Collection<Reserva> getReservas() {
+	public Collection<Reserva> getReservas() {
 		return this.reservas;
 	}
 	
-	//con esto obtengo todas las reservas de un usuario
-	public Collection<Reserva> getReservasDelUsuario( Pasajero usuario ){
+	//con esto obtengo todas las reservas de un usuario 
+	public Collection<Reserva> getReservasDelUsuario( Usuario usuario ){
 		Collection<Reserva> resultReservas = new ArrayList<Reserva>();
 		
 		FiltroComponente myFiltro = usuario.obtenerFiltroSimpleUsuario();

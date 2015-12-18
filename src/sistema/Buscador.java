@@ -6,10 +6,11 @@ import java.util.Collection;
 
 import org.joda.time.DateTime;
 
+import filtro.FiltroComponente;
 import filtro.FiltroCompuesto;
 import filtro.FiltroSimpleCantidadPasajeros;
 import filtro.FiltroSimpleCiudad;
-import filtro.FiltroSimpleFechas;
+import filtro.FiltroSimpleFechasFuturas;
 import hotel.Habitacion;
 import hotel.Hotel;
 import hotel.PeriodoDeFechas;
@@ -20,8 +21,9 @@ public class Buscador {
 	private int nroPasajeros;
 	private DateTime fechaEntrada;
 	private DateTime fechaSalida;
-	private Sistema sistema;
-	private FiltroCompuesto myFiltro = new FiltroCompuesto();
+	private FiltroCompuesto myFiltro;
+	private Collection<Hotel> hoteles;
+	private Collection<Reserva> reservas;
 		
 	/*MODIFICACION - abel
 	 * - CheckIn es el horario en el que el pasajero debe presentarse en el hotel para hacer uso de la reserva,
@@ -29,19 +31,22 @@ public class Buscador {
 	 * - CheckOut, IDEM CheckIn
 	 * - Agregue el sistema para solucionar el tema de habitacionCumple(Habitacion). El mayor problema que hay aca es que
 	 * 	 se necesita la lista de reservas del sistema para saber si una habitacion está o no disponible.*/
-	public Buscador( DateTime fechaEntrada, DateTime fechaSalida, Integer cantPasajeros, String  city, Sistema sistema){		
+	public Buscador( DateTime fechaEntrada, DateTime fechaSalida, Integer cantPasajeros, String  city,
+			Collection<Hotel> hoteles, Collection<Reserva> reservas){		
 		this.fechaEntrada = fechaEntrada; 
 		this.fechaSalida = fechaSalida;
 		this.nroPasajeros = cantPasajeros;
 		this.ciudad = city;
+		this.hoteles = hoteles;
+		this.reservas = reservas;
 		
+		myFiltro = new FiltroCompuesto();
 		myFiltro.componerFiltro(new FiltroSimpleCiudad(this.ciudad));
 		myFiltro.componerFiltro(new FiltroSimpleCantidadPasajeros(this.nroPasajeros));
-		myFiltro.componerFiltro(new FiltroSimpleFechas( new PeriodoDeFechas(this.fechaEntrada, this.fechaSalida)));
 	}
 	
 		
-	public Collection<Hotel> buscarHoteles( Collection<Hotel> hoteles ){
+	public Collection<Hotel> buscarHoteles(){
 		Collection<Hotel> resultHoteles = new ArrayList<Hotel>();
 		for ( Hotel h : hoteles ){
 			if ( hotelCumple( h ) ){
@@ -56,7 +61,7 @@ public class Buscador {
 		Collection<Habitacion> resultHabitaciones = new ArrayList<Habitacion>();
 		
 		for ( Habitacion h : hotel.getHabitaciones() ){
-			if ( habitacionCumple( h ) ){
+			if ( myFiltro.cumple( h ) && habitacionEstaDisponibleParaReserva(h, fechaEntrada, fechaSalida )){
 				resultHabitaciones.add( h );
 			}
 		}
@@ -72,21 +77,35 @@ public class Buscador {
 		if(hotel.getCiudad() == ciudad ){
 			// pregunta a cada habitacion del hotel si cumple la condicion o no 
 			for(Habitacion h : hotel.getHabitaciones()){
-				if(myFiltro.cumple(h)){
+				if(myFiltro.cumple(h) && habitacionEstaDisponibleParaReserva(h, fechaEntrada, fechaSalida )){
 					return true; 
 				}
 			}
 		}
 		return false; 
 	}
-		
-		
-	//tiene que cumplir disponibilidad y capacidad
-	public boolean habitacionCumple( Habitacion habitacion ){
-		return (sistema.habitacionEstaDisponibleParaReserva(habitacion, fechaEntrada, fechaSalida) && 
-				habitacion.getCapacidadMaxima() >= nroPasajeros);
+	
+	/** Se responde si unaHabitacion está disponible para ser reservada a partir desde una fechaInicio hasta una fechaFin.
+	 * @author abel*/
+	public boolean habitacionEstaDisponibleParaReserva(Habitacion unaHabitacion, DateTime fechaInicio, DateTime fechaFin) {
+		return 	unaHabitacion.noEstaCanceladaParaLasFechas(fechaInicio,fechaFin) &&
+				! this.habitacionHaSidoReservada(unaHabitacion, fechaInicio, fechaFin);
 	}
 
+	
+	/** Se responde si unaHabitacion tiene alguna reserva realizada en el sistema para alguna de las fechas del periodo
+	 * que va desde la fechaInicio hasta la fechaFin.
+	 * @author abel*/
+	private boolean habitacionHaSidoReservada(Habitacion unaHabitacion, DateTime fechaInicio, DateTime fechaFin) {
+		for(Reserva unaReserva: reservas ) {
+			if(	unaReserva.getHabitacion() == unaHabitacion &&
+				unaReserva.periodoDeLaReserva().seIntersectaConElPeriodo(fechaInicio, fechaFin)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public DateTime getFechaIngreso() {
 		return this.fechaEntrada;
 	}
@@ -95,8 +114,12 @@ public class Buscador {
 		return this.fechaSalida;
 	}
 
-	public Integer getCantidadPasajeros() {
+	public int getCantidadPasajeros() {
 		return this.nroPasajeros;
+	}
+	
+	public Collection<Reserva> getReservas(){
+		return this.reservas;
 	}
 		
 }

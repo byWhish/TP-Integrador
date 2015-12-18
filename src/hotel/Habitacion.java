@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.ReadableInstant;
 
 import filtro.Filtrable;
 import usuario.Hotelero;
@@ -162,15 +163,13 @@ public class Habitacion implements Filtrable{
 		}
 
 
-		@Override
 		public Usuario getUsuario() {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 
-		@Override
-		public PeriodoDeFechas getPeriodoDeFecha() {
+		public ReadableInstant getFechaEntrada() {
 			// TODO Auto-generated method stub
 			return null;
 		}

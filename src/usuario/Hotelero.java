@@ -26,19 +26,20 @@ public class Hotelero extends Usuario{
 	}
 	
 	//devuelvo las reservas a partir de N dias
-	public Collection<Reserva> reservasAPartirDeNDias( int cantidadDias, Collection<Reserva> reservas ){
+	public Collection<Reserva> reservasAPartirDeNDias( int cantidadDias, Collection<Reserva> reservasDelUsuario ){
 		DateTime toDay = new DateTime();
-		return reservasAPartirDeFecha( toDay.plusDays( cantidadDias ), reservas );		
+		return reservasAPartirDeFecha( toDay.plusDays( cantidadDias ), reservasDelUsuario );		
 	}
 	
 	
 	/** Se responde con las reservas que están siendo actualmente ocupadas en el Hotel
 	 * administrado por el Hotelero.*/
-	public Collection<Reserva> reservasActuales( Collection<Reserva> reservas ){
+	public Collection<Reserva> reservasActuales( Collection<Reserva> reservasDelUsuario ){
+		// reservas son todas la reservas que posee el hotelero 
+		// el metodo reservasActuales resiva ya las "reservas" del usuario 
 		Collection<Reserva> resultReservas = new ArrayList<Reserva>();
 		DateTime toDay = new DateTime();
-		reservas = this.getReservas( reservas );
-			for ( Reserva unaReserva : reservas ){
+			for ( Reserva unaReserva : reservasDelUsuario ){
 				
 				//MODIFICACION abel - correcion if...
 				if ( unaReserva.periodoDeLaReserva().estaIncluidoEnElPeriodoLaFecha(toDay) ){

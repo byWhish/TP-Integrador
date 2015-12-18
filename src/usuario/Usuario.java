@@ -1,5 +1,7 @@
 package usuario;
 
+
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -7,6 +9,7 @@ import org.joda.time.DateTime;
 
 import filtro.FiltroComponente;
 import sistema.Reserva;
+import sistema.Sistema;
 
 public abstract class Usuario {
 
@@ -30,16 +33,11 @@ public abstract class Usuario {
 	}
 	
 	//getReservas devuelve todas las reservas de un usuario que cumpla la condicion que 
-	//puede ser diferente para cada clase de usuario
-	public Collection<Reserva> getReservas( Collection<Reserva> reservas ){
-		Collection<Reserva> resultReserva = new ArrayList<Reserva>();
-		for ( Reserva r : reservas ){
-			if ( reservaDelUsuario( r ) ){
-				resultReserva.add( r );
-			}  
-		} 
-		return resultReserva;
-	}
+		//puede ser diferente para cada clase de usuario
+		public Collection<Reserva> getReservas( Sistema s ){
+		 
+			return s.getReservasDelUsuario(this);
+		}
 	
 	//reserva del usuario es la condicion para saber si la reserva le pertenece al usuario
 	public abstract boolean reservaDelUsuario( Reserva reserva );
@@ -53,10 +51,9 @@ public abstract class Usuario {
 	}
 		
 		//devuelvo una coleccion con las reservas a partir de una fecha dada
+		// "reservas" ya son las reservas del usuario  
 	public Collection<Reserva> reservasAPartirDeFecha( DateTime fecha, Collection<Reserva> reservas ){
 		Collection<Reserva> resultReservas = new ArrayList<Reserva>();
-		reservas = getReservas( reservas );
-		
 		for ( Reserva r : reservas ){
 			if ( r.getFechaEntrada().isAfter( fecha ) ){
 				resultReservas.add( r );

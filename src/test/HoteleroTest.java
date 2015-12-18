@@ -9,12 +9,14 @@ import hotel.Habitacion;
 import hotel.Hotel;
 import junit.framework.TestCase;
 import sistema.Reserva;
+import sistema.Sistema;
 import usuario.Hotelero;
 import usuario.Pasajero;
 
 /** Testeo de la clase Hotelero
  * @author abel*/
 public class HoteleroTest extends TestCase {
+	private Sistema sistema = new Sistema();
 	
 	private Hotel hotelAdministrado = new Hotel(); //Hotel administrado por unHotelero
 	private Hotel hotel2 = new Hotel();
@@ -47,17 +49,19 @@ public class HoteleroTest extends TestCase {
 	/**@author abel*/
 	protected void setUp() throws Exception {
 		super.setUp();
-		listaDeReservas.add(reservaAntigua);
-		listaDeReservas.add(reservaActual);
-		listaDeReservas.add(reservaFutura);
-		listaDeReservas.add(reservaFuturaEnNDias);
 		
-		listaDeReservasDeUnHotelero.addAll(listaDeReservas);//solamente reservas de unHotelero
 		
-		listaDeReservas.add(controlReservaAntigua);
-		listaDeReservas.add(controlReservaActual);
-		listaDeReservas.add(controlReservaFutura);
-		listaDeReservas.add(controlReservaFuturaEnNDias);
+		sistema.registrarReserva(reservaAntigua);
+		sistema.registrarReserva(reservaActual);
+		sistema.registrarReserva(reservaFutura);
+		sistema.registrarReserva(reservaFuturaEnNDias);
+		
+		listaDeReservasDeUnHotelero.addAll(sistema.getReservas());//solamente reservas de unHotelero
+		
+		sistema.registrarReserva(controlReservaAntigua);
+		sistema.registrarReserva(controlReservaActual);
+		sistema.registrarReserva(controlReservaFutura);
+		sistema.registrarReserva(controlReservaFuturaEnNDias);
 	}
 
 	
@@ -65,7 +69,7 @@ public class HoteleroTest extends TestCase {
 	 * para obtener unicamente las reservas que le corresponden a unHotelero.
 	 * @author abel*/
 	public void test01_DadoUnHoteleroYUnaListaDeReservasObtengoTodasLasReservasDelHoteleroUnicamente() {
-		Collection<Reserva> listaObtenida = unHotelero.getReservas(listaDeReservas);
+		Collection<Reserva> listaObtenida = unHotelero.getReservas(sistema);
 		
 		assertEquals(listaObtenida, listaDeReservasDeUnHotelero);
 		assertEquals(listaObtenida.size(), 4);
@@ -77,8 +81,8 @@ public class HoteleroTest extends TestCase {
 	 * la fecha actual.
 	 * @author abel*/
 	public void test02_DadoUnHoteleroYUnaListaDeReservasObtengoLasReservasActualesYQueSonDelHoteleroUnicamente() {
-		Collection<Reserva> listaObtenida = unHotelero.reservasActuales(listaDeReservas);
-		
+		Collection<Reserva> listaObtenida = unHotelero.reservasActuales(sistema.getReservasDelUsuario(unHotelero));
+		// el metodo reservasActuales resiva ya las reservas del usuario 
 		assertEquals(listaObtenida.size(), 1);
 		assertTrue(listaObtenida.contains(reservaActual));
 	}
@@ -89,7 +93,7 @@ public class HoteleroTest extends TestCase {
 	 * actual.
 	 * @author abel*/
 	public void test03_DadoUnHoteleroYUnaListaDeReservasObtengoTodasLasReservasFuturas() {
-		Collection<Reserva> listaObtenida = unHotelero.reservasFuturas(listaDeReservas);
+		Collection<Reserva> listaObtenida = unHotelero.reservasFuturas(sistema.getReservasDelUsuario(unHotelero));
 		
 		assertEquals(listaObtenida.size(), 2);
 		assertTrue(listaObtenida.contains(reservaFutura));
@@ -102,7 +106,7 @@ public class HoteleroTest extends TestCase {
 	 * @author abel*/
 	public void test04_DadoUnHoteleroYUnaListaDeReservasObtengoTodasLasReservasFuturasCuyaFechaDeIngresoEsEnNDias() {
 		Integer n = 19/*dias*/;
-		Collection<Reserva> listaObtenida = unHotelero.reservasAPartirDeNDias(n, listaDeReservas);
+		Collection<Reserva> listaObtenida = unHotelero.reservasAPartirDeNDias(n, sistema.getReservasDelUsuario(unHotelero));
 		
 		assertEquals(listaObtenida.size(), 1);
 		assertTrue(listaObtenida.contains(reservaFuturaEnNDias));

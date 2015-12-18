@@ -22,22 +22,12 @@ public class Pasajero extends Usuario{
 		return ( reserva.getUsuario() == this );
 	}
 	
-	
-	/** Se responde con todas las reservas que el pasajero realizó en el sistema.
-	 * @author abel*/
-	public Collection<Reserva> todasLasReservas(Collection<Reserva> listaDeReservas) {
-		return this.getReservas(listaDeReservas);
-	}
-	
 
 	//aca recorro las reservas y guardo en un set para que no se repitan
-	public Collection<String> ciudadesDondeSeRealizaronReservas( Collection<Reserva> reservas ){
-		
-		//MODIFICACION abel - obtener las reservas unicamente del usuario:
-		Collection<Reserva> reservasDelPasajero = this.getReservas(reservas);
-		
+	public Collection<String> ciudadesDondeSeRealizaronReservas( Collection<Reserva> reservasDelUsuario ){
+
 		Collection<String> returnCiudades = new HashSet<String>();
-			for ( Reserva r : reservasDelPasajero ){
+			for ( Reserva r : reservasDelUsuario ){
 				returnCiudades.add( r.getCiudad() );
 			}
 		
@@ -45,13 +35,11 @@ public class Pasajero extends Usuario{
 	}
 	
 	//devuelvo una colleccion de reservas en una ciudad dada
-	public Collection<Reserva> reservasEnUnaCiudadParticular( Collection<Reserva> reservas, String ciudad ){
+	public Collection<Reserva> reservasEnUnaCiudadParticular( Collection<Reserva> reservasDelUsuario, String ciudad ){
 		
 		//MODIFICACION abel - obtener las reservas unicamente del usuario:
-		Collection<Reserva> reservasDelPasajero = this.getReservas(reservas);
-		
 		Collection<Reserva> resultReservas = new ArrayList<Reserva>();
-		for ( Reserva r : reservasDelPasajero){
+		for ( Reserva r : reservasDelUsuario){
 			if ( r.getCiudad() == ciudad ){
 				resultReservas.add( r );
 			}

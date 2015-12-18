@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.joda.time.DateTime;
+import org.joda.time.ReadableInstant;
 
 import filtro.Filtrable;
 import usuario.Hotelero;
@@ -158,27 +159,26 @@ public class Hotel implements Filtrable{
 		return this.formasDePago;
 	}
 
-	@Override
+	
 	public Usuario getUsuario() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+
 	public Hotel getHotel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
-	@Override
+	
 	public int getCapacidadMaxima() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public PeriodoDeFechas getPeriodoDeFecha() {
+	public ReadableInstant getFechaEntrada() {
 		// TODO Auto-generated method stub
 		return null;
 	}
